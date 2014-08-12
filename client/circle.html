@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en" ng-app>
+    
+    <head>
+        <title>ss Example</title>
+        <link rel="stylesheet" href="css/circle.css"></link>
+    </head>
+    
+    <body>a</body>
+    <script>
+        var pivotX = 250;
+        var pivotY = 250;
+        var pivotElm = createPoint('pivot');
+        var itemsNum = 5;
+        var alfa = 360 / itemsNum;
+        var radius = 200;
+        var items;
+        pivotElm.classList.add('pivot');
+        setPosition(pivotX, pivotY, pivotElm);
+
+
+        for (var i = 0; i < itemsNum; i++) {
+            var x = pivotX + radius * Math.cos((90 - alfa * i) * Math.PI / 180);
+            var y = pivotY + radius * Math.sin((90 - alfa * i) * Math.PI / 180);
+            doPositionedElement(x, y, '_elm' + i);
+        }
+
+        items = document.getElementsByTagName('planet');
+
+        document.body.addEventListener("click", function(e) {
+            console.log("you clicked " + e.target);
+            if (e.target.tagName === "PLANET") {
+                reOrg(e.target);
+
+            }
+            else {
+
+            }
+
+        });
+
+        function createPoint(tagname) {
+            var tagName = !tagname ? "PLANET" : tagname;
+            var el = document.createElement(tagName);
+            el.classList.add("point");
+            //  attachEvent(el);
+            document.body.appendChild(el);
+            return el;
+        }
+
+        function setPosition(left, top, elm) {
+            var centerFix = elm.offsetWidth / 2;
+            elm.style.top = (top - centerFix) + "px";
+            elm.style.left = (left - centerFix) + "px";
+        }
+
+        function doPositionedElement(x, y, idName) {
+            var el = createPoint();
+            if ( !! idName) {
+                el.id = idName;
+            }
+            setPosition(x, y, el);
+        }
+
+        function attachEvent(elm) {
+            elm.addEventListener("click", function(e) {
+                console.log("you clicked " + e.target);
+                elm.classList.add('selected');
+            });
+        }
+
+        function reOrg(elm) {
+            var indx, lastX, lastY;
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].id === elm.id) {
+                    indx = i;
+                    lastX=items[i].style.left;
+                    lastY=items[i].style.top;
+                    
+                }
+            }
+             var pos = indx;
+            for (var i = 0; i <items.length; i++) {
+               
+                if (pos >items.length-1) {
+                    pos = 0;
+                }
+                
+                items[pos].classList.remove('selected');
+                if (items[pos].id === elm.id) {
+                    elm.classList.add('selected');
+                }
+                
+                console.log("i: " + i + "; pos: " + pos);
+                 
+                if(i < items.length) {
+                    console.log('i < items.length: '+i < items.length);
+                    items[pos].style.left = items[pos+1].style.left;
+                    items[pos].style.top =  items[pos+1].style.top; 
+                }else {
+                    console.log('i < items.length: '+i < items.length);
+                    
+                    items[pos].style.left = lastX;
+                    items[pos].style.top =  lastY; 
+                }
+                pos++;
+
+            }
+
+        }
+    </script>
+
+</html>

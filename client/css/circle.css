@@ -1,0 +1,25 @@
+
+planet{
+    -webkit-transition: all 300ms linear;
+    }
+planet.selected{background-color:blue;}
+
+.point{
+    border:3px red solid;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    position:absolute;
+    }
+    ._elm0{
+        border-color:blue;
+    }
+     ._elm1{
+        border-color:orange;
+    }
+     ._elm2{
+        border-color:green;
+    }
+     ._elm3{
+        border-color:pink;
+    }
